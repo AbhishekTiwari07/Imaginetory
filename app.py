@@ -34,34 +34,6 @@ def blurring(img, value):
 \
 
 
-def contrast_stretch(img):
-
-    if img.itemsize > 1:
-        result = np.zeros(img.shape, dtype=np.uint)
-
-    else:
-        result = np.zeros(img.shape, dtype=np.uint8)
-
-    bytes = img.itemsize
-
-    s1 = 0
-    s2 = (2 ** (bytes*8))-1
-
-    for k in range(3):
-        r1 = img[:, :, k].min()
-        r2 = img[:, :, k].max()
-
-        for i in range(img.shape[0]):
-            for j in range(img.shape[1]):
-                pixVal = img[i, j, k]
-                newVal = (((s2-s1)*(pixVal-r1))//(r2-r1))+s1
-
-                if newVal > 0:
-                    result[i, j, k] = newVal
-
-                else:
-                    result[i, j, k] = 0
-    return result
 
 
 def negate(img):
@@ -97,7 +69,7 @@ def app():
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
                 'Original', 'Contrast', 
-                'Bluring', 'Negative', 'Contrast Stretching', 'Upscale'])
+                'Bluring', 'Negative', , 'Upscale'])
 
           
 
@@ -126,12 +98,6 @@ def app():
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
-            elif enhance_type == 'Contrast Stretching':
-
-                our_image = np.array(our_image)
-                out_img = contrast_stretch(our_image)
-                col2.header('Edited Image')
-                col2.image(out_img, use_column_width=True)
 
             elif enhance_type == 'Upscale':
                 image = upscale(our_image)
