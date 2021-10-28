@@ -165,7 +165,7 @@ def app():
             elif enhance_type == 'Upscale':
                 image = upscale(img)
                 col2.header('Edited Image')
-                col2.image(out_img, use_column_width=True)
+                col2.image(image, use_column_width=True)
 
 
 if __name__ == "__main__":
