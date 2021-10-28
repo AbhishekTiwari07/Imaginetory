@@ -77,7 +77,7 @@ def app():
             if enhance_type == 'Bluring: Gaussian':
                 img = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 5, 1)
-                out_img = cv2.GaussianBlur(img, (br_rate, br_rate), cv2.BORDER_DEFAULT)
+                out_img = cv2.GaussianBlur(our_new_image, (3, 3), cv2.BORDER_DEFAULT)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
             
@@ -85,7 +85,7 @@ def app():
                 our_new_image = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 5, 1)
                 print(br_rate)
-                out_img = cv2.medianBlur(img, br_rate)
+                out_img = cv2.medianBlur(our_new_image, br_rate)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
