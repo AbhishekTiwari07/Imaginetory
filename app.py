@@ -35,9 +35,9 @@ def blurring(img, value):
 
 
 def denoising(img):
-    # b,g,r = cv2.split(img)
-    # rgb_img = cv2.merge([r,g,b])
-    dst = cv2.fastNlMeansDenoisingColored(img,None,10,10,7,21)
+    b,g,r = cv2.split(img)
+    rgb_img = cv2.merge([r,g,b])
+    dst = cv2.fastNlMeansDenoisingColored(rgb_img,None,10,10,7,21)
     b,g,r = cv2.split(dst)
     rgb_dst = cv2.merge([r,g,b])
     return rgb_dst
@@ -97,7 +97,7 @@ def app():
                 image = upscale(our_image)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
-            #ye wala dekh lena
+
             elif enhance_type == 'Denoising':
                 our_image = np.array(our_image)
                 image = denoising(our_image)
