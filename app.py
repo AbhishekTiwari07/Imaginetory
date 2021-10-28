@@ -17,15 +17,10 @@ def load_image(img):
     return im
 
 
-def greyscale(img):
 
-    result = np.zeros((img.shape[0], img.shape[1]), dtype=np.uint8)
-    result[:, :] = (img[:, :, 0]*0.07 + img[:, :, 1]
-                    * 0.72 + img[:, :, 2] * 0.21)
-
-    return result
 
 def upscale(img):
+    img = np.array(img)
     bipolar = cv2.resize(img, None, fx = 2, fy = 2, interpolation = cv2.INTER_CUBIC)
     return bipolar
 
@@ -94,7 +89,7 @@ def negate(img):
 
 
 def app():
-    activities = ['Bommer pls click']
+    activities = ['Enhancements']
     choice = st.sidebar.selectbox('Select activities', activities)
 
     if choice == 'Enhancements':
@@ -115,14 +110,7 @@ def app():
                 'Original', 'Gray scale', 'Contrast', 'Brightness',
                 'Bluring', 'Negative', 'Contrast Stretching', 'Upscale'])
 
-            if enhance_type == 'Gray scale':
-
-                new_img = np.array(our_image.convert('RGB'))
-                img = greyscale(new_img)
-                # img = cv2.cvtColor(new_img, 1)
-                # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                col2.header('Edited Image')
-                col2.image(img, use_column_width=True)
+          
 
             elif enhance_type == 'Contrast':
 
@@ -163,8 +151,7 @@ def app():
                 col2.image(out_img, use_column_width=True)
 
             elif enhance_type == 'Upscale':
-                image = np.array(our_image)
-                image = upscale(image)
+                image = upscale(our_image)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
 
