@@ -69,7 +69,7 @@ def app():
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
                 'Original', 'Contrast', 
-                'Bluring', 'Negative', , 'Upscale'])
+                'Bluring', 'Negative' , 'Upscale'])
 
           
 
