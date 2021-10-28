@@ -112,27 +112,31 @@ def app():
 
             elif enhance_type == 'Bluring: Median':
                 img = np.array(our_image)
-                br_rate = st.sidebar.slider('Bluring', 1, 9, 1)
+                br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
                 try:
                     out_img = medianBlur(img, br_rate)
                 except:
-                    out_img = medianBlur(img, br_rate-1)
+                    out_img = medianBlur(img, br_rate+1)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
             elif enhance_type == 'Erosion':
                 img = np.array(our_image)
-                br_rate = st.sidebar.slider('Iteration', 1, 10, 1)
-                br_rate2 = st.sidebar.slider('Kernal Size', 1, 10, 1)
-                img_erosion = erode(img, br_rate, br_rate2)
+                # br_rate = st.sidebar.slider('Iteration', 1, 10, 1)
+                # br_rate2 = st.sidebar.slider('Kernal Size', 1, 10, 1)
+                # img_erosion = erode(img, br_rate, br_rate2)
+                kernel = np.ones((3,3), np.uint8)
+                cv2.erode(img, kernel, iterations=1)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
             
             elif enhance_type == 'Dilation':
                 img = np.array(our_image)
-                br_rate = st.sidebar.slider('Iteration', 1, 10, 1)
-                br_rate2 = st.sidebar.slider('Kernal Size', 1, 10, 1)
-                img_erosion = dilute(img, br_rate, br_rate2)
+                # br_rate = st.sidebar.slider('Iteration', 1, 10, 1)
+                # br_rate2 = st.sidebar.slider('Kernal Size', 1, 10, 1)
+                # img_erosion = dilute(img, br_rate, br_rate2)
+                kernel = np.ones((3,3), np.uint8)
+                cv2.dilate(img, kernel, iterations=1)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
 
@@ -140,7 +144,7 @@ def app():
             elif enhance_type == 'Bluring: Gaussian':
                 our_new_image = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                image = gaussian(our_new_image, br_rate)
+                image = gaussianBlur(our_new_image, br_rate)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
 
