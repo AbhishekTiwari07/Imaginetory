@@ -52,19 +52,19 @@ def thresholding(img, value):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     return cv2.threshold(gray, value, 255, cv2.THRESH_BINARY)[1]
 
-def gaussianBlur(img, value):
+def medianBlur(img, value):
     img = cv2.medianBlur(img, value)
     return img
 
-def medianBlur(img, value):
+def gaussianBlur(img, value):
     return cv2.GaussianBlur(img, (value,value), cv2.BORDER_DEFAULT)
 
-def erode(img, value):
-    kernel = np.ones((5,5), np.uint8)
+def erode(img, kernal, value):
+    kernel = np.ones((kernal, kernal), np.uint8)
     return cv2.erode(img, kernel, iterations=value)
 
-def dilute(img, value):
-    kernel = np.ones((5,5), np.uint8)
+def dilute(img, kernal,value):
+    kernel = np.ones((kernal,kernal), np.uint8)
     return cv2.dilate(img, kernel, iterations=value)
 
 def app():
@@ -105,6 +105,7 @@ def app():
 
             elif enhance_type == 'Adaptive Thresholding':
                 img = np.array(our_image)
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 img = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 41,3)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
@@ -121,15 +122,17 @@ def app():
 
             elif enhance_type == 'Erosion':
                 img = np.array(our_image)
-                br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                img_erosion = erode(img, br_rate)
+                br_rate = st.sidebar.slider('Iteration', 1, 10, 1)
+                br_rate2 = st.sidebar.slider('Kernal Size', 1, 10, 1)
+                img_erosion = erode(img, br_rate, br_rate2)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
             
             elif enhance_type == 'Dilation':
                 img = np.array(our_image)
-                br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                img_erosion = dilute(img, value)
+                br_rate = st.sidebar.slider('Iteration', 1, 10, 1)
+                br_rate2 = st.sidebar.slider('Kernal Size', 1, 10, 1)
+                img_erosion = dilute(img, br_rate, br_rate2)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
 
@@ -137,12 +140,11 @@ def app():
             elif enhance_type == 'Bluring: Gaussian':
                 our_new_image = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                image = gaussianBlur(our_new_image, br_rate)
+                image = gaussian(our_new_image, br_rate)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
 
-            
-
+        
             elif enhance_type == 'Negative':
                 our_image = np.array(our_image)
                 out_img = negate(our_image)
