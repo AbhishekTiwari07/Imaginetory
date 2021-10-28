@@ -16,14 +16,10 @@ def load_image(img):
     im = Image.open(img)
     return im
 
-
-
-
 def upscale(img):
     img = np.array(img)
     bipolar = cv2.resize(img, None, fx = 2, fy = 2, interpolation = cv2.INTER_CUBIC)
     return bipolar
-
 
 def blurring(img, value):
     value = int(value)*3
@@ -31,8 +27,6 @@ def blurring(img, value):
     image_blur = cv2.filter2D(img, -1, blur_filter)
 
     return image_blur
-
-
 
 def denoising(img):
     b,g,r = cv2.split(img)
@@ -54,6 +48,9 @@ def negate(img):
 
     return result
 
+def thresholding(img):
+    image = cv2.medianBlur(img, 3)
+    return image
 
 def app():
     activities = ['Enhancements']
@@ -77,11 +74,17 @@ def app():
                 'Original', 'Denoising',
                 'Bluring', 'Negative' , 'Upscale'])
 
-            if enhance_type == 'Bluring':
-
+            if enhance_type == 'Bluring: Median':
+                img = np.array(our_image)
+                br_rate = st.sidebar.slider('Bluring', 1, 5, 1)
+                out_img = cv2.GaussianBlur(img, (br_rate, br_rate), cv2.BORDER_DEFAULT)
+                col2.header('Edited Image')
+                col2.image(out_img, use_column_width=True)
+            
+            if enhance_type == 'Bluring: Gaussian':
                 our_new_image = np.array(our_image)
-                br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                out_img = blurring(our_new_image, br_rate)
+                br_rate = st.sidebar.slider('Bluring', 1, 5, 1)
+                out_img = cv2.medianBlur(img, br_rate)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
