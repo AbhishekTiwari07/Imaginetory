@@ -25,6 +25,10 @@ def greyscale(img):
 
     return result
 
+def upscale(img):
+    bipolar = cv2.resize(img, None, fx = 2, fy = 2, interpolation = cv2.INTER_CUBIC)
+    return bipolar
+
 
 def blurring(img, value):
     value = int(value)*3
@@ -109,7 +113,7 @@ def app():
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
                 'Original', 'Gray scale', 'Contrast', 'Brightness',
-                'Bluring', 'Negative', 'Contrast Stretching'])
+                'Bluring', 'Negative', 'Contrast Stretching', 'Upscale'])
 
             if enhance_type == 'Gray scale':
 
@@ -155,6 +159,11 @@ def app():
 
                 our_image = np.array(our_image)
                 out_img = contrast_stretch(our_image)
+                col2.header('Edited Image')
+                col2.image(out_img, use_column_width=True)
+
+            elif enhance_type == 'Upscale':
+                image = upscale(img)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
