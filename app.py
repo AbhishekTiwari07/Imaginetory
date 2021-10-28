@@ -31,18 +31,7 @@ def blurring(img, value):
     image_blur = cv2.filter2D(img, -1, blur_filter)
 
     return image_blur
-
-
-def change_brightness(img, value):
-    value = value*40
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    h, s, v = cv2.split(hsv)
-    v = cv2.add(v, value)
-    v[v > 255] = 255
-    v[v < 0] = 0
-    final_hsv = cv2.merge((h, s, v))
-    img = cv2.cvtColor(final_hsv, cv2.COLOR_HSV2BGR)
-    return img
+\
 
 
 def contrast_stretch(img):
@@ -120,13 +109,7 @@ def app():
                 col2.header('Edited Image')
                 col2.image(img_output, use_column_width=True)
 
-            elif enhance_type == 'Brightness':
-
-                our_new_image = np.array(our_image)
-                br_rate = st.sidebar.slider('Brightness', -4.5, 4.5, 1.0)
-                out_img = change_brightness(our_new_image, br_rate)
-                col2.header('Edited Image')
-                col2.image(out_img, use_column_width=True)
+            
 
             elif enhance_type == 'Bluring':
 
