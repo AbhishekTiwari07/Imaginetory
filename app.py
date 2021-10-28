@@ -34,7 +34,16 @@ def blurring(img, value):
 
 
 
+def denoising(img):
+    b,g,r = cv2.split(img)           # get b,g,r
+    rgb_img = cv2.merge([r,g,b])     # switch it to rgb
 
+    # Denoising
+    dst = cv2.fastNlMeansDenoisingColored(img,None,10,10,7,21)
+
+    b,g,r = cv2.split(dst)           # get b,g,r
+    rgb_dst = cv2.merge([r,g,b])     # switch it to rgb
+    return rgb_dst
 
 def negate(img):
 
@@ -68,7 +77,7 @@ def app():
                 col1.image(our_image, use_column_width=True)
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
-                'Original', 
+                'Original', 'Denoising',
                 'Bluring', 'Negative' , 'Upscale'])
 
           
@@ -94,6 +103,11 @@ def app():
 
             elif enhance_type == 'Upscale':
                 image = upscale(our_image)
+                col2.header('Edited Image')
+                col2.image(image, use_column_width=True)
+
+            elif enhance_type == 'Denoising':
+                image = denoising(our_image)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
 
