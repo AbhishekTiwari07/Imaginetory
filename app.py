@@ -112,7 +112,7 @@ def app():
 
           
 
-            elif enhance_type == 'Contrast':
+            if enhance_type == 'Contrast':
 
                 c_rate = st.sidebar.slider('Constrast', -4.5, 4.5, 1.0)
                 enhancer = ImageEnhance.Contrast(our_image)
