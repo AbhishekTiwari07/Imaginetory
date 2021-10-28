@@ -68,18 +68,11 @@ def app():
                 col1.image(our_image, use_column_width=True)
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
-                'Original', 'Contrast', 
+                'Original', 
                 'Bluring', 'Negative' , 'Upscale'])
 
           
 
-            if enhance_type == 'Contrast':
-
-                c_rate = st.sidebar.slider('Constrast', -4.5, 4.5, 1.0)
-                enhancer = ImageEnhance.Contrast(our_image)
-                img_output = enhancer.enhance(c_rate)
-                col2.header('Edited Image')
-                col2.image(img_output, use_column_width=True)
 
             
 
