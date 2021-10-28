@@ -49,7 +49,8 @@ def negate(img):
     return result
 
 def thresholding(img, value):
-    return cv2.threshold(img, value, 255, cv2.THRESH_BINARY)[1]
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    return cv2.threshold(gray, value, 255, cv2.THRESH_BINARY)[1]
 
 def gaussianBlur(img, value):
     img = cv2.medianBlur(img, value)
@@ -77,13 +78,19 @@ def app():
                 col1.image(our_image, use_column_width=True)
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
-                'Original', 'Thresholding','Adaptive Thresholding', 'Denoising','Bluring: Median',
+                'Original','Gray', 'Thresholding','Adaptive Thresholding', 'Denoising','Bluring: Median',
                 'Bluring: Gaussian', 'Negative' , 'Upscale'])
 
             if enhance_type == 'Thresholding':
                 img = np.array(our_image)
                 threshold = st.sidebar.slider('Threshold', 0, 255, 1)
                 out_img = thresholding(img, threshold)
+                col2.header('Edited Image')
+                col2.image(out_img, use_column_width=True)
+
+            if enhance_type == 'Gray':
+                img = np.array(our_image)
+                out_img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
@@ -95,8 +102,11 @@ def app():
 
             if enhance_type == 'Bluring: Median':
                 img = np.array(our_image)
-                br_rate = st.sidebar.slider('Bluring', 1, 9, 2)
-                out_img = medianBlur(img, br_rate)
+                br_rate = st.sidebar.slider('Bluring', 1, 9, 1)
+                try:
+                    out_img = medianBlur(img, br_rate)
+                except:
+                    out_img = medianBlur(img, br_rate-1)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
             
