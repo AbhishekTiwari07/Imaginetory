@@ -91,7 +91,7 @@ def app():
             if enhance_type == 'Bluring: Median':
                 our_new_image = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                out_img = cv2.medianBlur(our_new_image, 3)
+                out_img = cv2.medianBlur(our_new_image, br_rate)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
