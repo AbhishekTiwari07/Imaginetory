@@ -26,6 +26,7 @@ def greyscale(img):
     return result
 
 def upscale(img):
+    img = np.array(img)
     bipolar = cv2.resize(img, None, fx = 2, fy = 2, interpolation = cv2.INTER_CUBIC)
     return bipolar
 
@@ -163,7 +164,7 @@ def app():
                 col2.image(out_img, use_column_width=True)
 
             elif enhance_type == 'Upscale':
-                image = upscale(img)
+                image = upscale(our_image)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
 
