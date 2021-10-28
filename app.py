@@ -59,6 +59,14 @@ def gaussianBlur(img, value):
 def medianBlur(img, value):
     return cv2.GaussianBlur(img, (value,value), cv2.BORDER_DEFAULT)
 
+def erode(img, value):
+    kernel = np.ones((5,5), np.uint8)
+    return cv2.erode(img, kernel, iterations=value)
+
+def dilute(img, value):
+    kernel = np.ones((5,5), np.uint8)
+    return cv2.dilate(img, kernel, iterations=value)
+
 def app():
     activities = ['Enhancements', 'Face Detection']
     choice = st.sidebar.selectbox('Select activities', activities)
@@ -112,18 +120,16 @@ def app():
                 col2.image(out_img, use_column_width=True)
 
             elif enhance_type == 'Erosion':
-                kernel = np.ones((5,5), np.uint8)
                 img = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                img_erosion = cv2.erode(img, kernel, iterations=br_rate)
+                img_erosion = erode(img, br_rate)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
             
             elif enhance_type == 'Dilation':
-                kernel = np.ones((5,5), np.uint8)
                 img = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                img_erosion = cv2.dilate(img, kernel, iterations=br_rate)
+                img_erosion = dilute(img, value)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
