@@ -78,7 +78,8 @@ def app():
                 col1.image(our_image, use_column_width=True)
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
-                'Original','Gray', 'Thresholding','Adaptive Thresholding', 'Denoising','Bluring: Median',
+                'Original','Gray', 'Thresholding','Adaptive Thresholding', 'Erosion','Dilation', 
+                'Denoising','Bluring: Median',
                 'Bluring: Gaussian', 'Negative' , 'Upscale'])
 
             if enhance_type == 'Thresholding':
@@ -88,19 +89,19 @@ def app():
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
-            if enhance_type == 'Gray':
+            elif enhance_type == 'Gray':
                 img = np.array(our_image)
-                out_img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+                out_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
-            if enhance_type == 'Adaptive Thresholding':
+            elif enhance_type == 'Adaptive Thresholding':
                 img = np.array(our_image)
                 img = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 41,3)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
-            if enhance_type == 'Bluring: Median':
+            elif enhance_type == 'Bluring: Median':
                 img = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 9, 1)
                 try:
@@ -109,13 +110,32 @@ def app():
                     out_img = medianBlur(img, br_rate-1)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
+
+            elif enhance_type == 'Erosion':
+                kernel = np.ones((5,5), np.uint8)
+                img = np.array(our_image)
+                br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
+                img_erosion = cv2.erode(img, kernel, iterations=br_rate)
+                col2.header('Edited Image')
+                col2.image(out_img, use_column_width=True)
             
-            if enhance_type == 'Bluring: Gaussian':
+            elif enhance_type == 'Dilation':
+                kernel = np.ones((5,5), np.uint8)
+                img = np.array(our_image)
+                br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
+                img_erosion = cv2.dilate(img, kernel, iterations=br_rate)
+                col2.header('Edited Image')
+                col2.image(out_img, use_column_width=True)
+
+            
+            elif enhance_type == 'Bluring: Gaussian':
                 our_new_image = np.array(our_image)
-                br_rate = st.sidebar.slider('Bluring', 1, 9, 2)
+                br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
                 image = gaussianBlur(our_new_image, br_rate)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
+
+            
 
             elif enhance_type == 'Negative':
                 our_image = np.array(our_image)
