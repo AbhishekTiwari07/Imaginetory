@@ -80,7 +80,7 @@ def app():
             if enhance_type == 'Thresholding':
                 img = np.array(our_image)
                 threshold = st.sidebar.slider('Threshold', 0, 255, 1)
-                out_img = gaussianBlur(img, value)
+                out_img = gaussianBlur(img, threshold)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
@@ -92,7 +92,7 @@ def app():
 
             if enhance_type == 'Bluring: Median':
                 img = np.array(our_image)
-                br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
+                br_rate = st.sidebar.slider('Bluring', 1, 9, 2)
                 out_img = medianBlur(img, br_rate)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
