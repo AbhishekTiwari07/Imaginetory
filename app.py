@@ -71,8 +71,15 @@ def app():
                 col1.image(our_image, use_column_width=True)
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
-                'Original', 'Denoising','Bluring: Median',
+                'Original', 'Thresholding:', 'Denoising','Bluring: Median',
                 'Bluring: Gaussian', 'Negative' , 'Upscale'])
+
+            if enhance_type == 'Thresholding':
+                img = np.array(our_image)
+                threshold = st.sidebar.slider('Threshold', 1,10,1)
+                out_img = cv2.threshold(gray_img, 160, 255, cv2.THRESH_BINARY)[1]
+                col2.header('Edited Image')
+                col2.image(out_img, use_column_width=True)
 
             if enhance_type == 'Bluring: Gaussian':
                 img = np.array(our_image)
