@@ -76,8 +76,8 @@ def app():
 
             if enhance_type == 'Thresholding':
                 img = np.array(our_image)
-                threshold = st.sidebar.slider('Threshold', 1,10,1)
-                out_img = cv2.threshold(gray_img, 160, 255, cv2.THRESH_BINARY)[1]
+                threshold = st.sidebar.slider('Threshold', 0,255,1)
+                out_img = cv2.threshold(img, threshold, 255, cv2.THRESH_BINARY)[1]
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
