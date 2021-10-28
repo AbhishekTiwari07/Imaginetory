@@ -107,7 +107,7 @@ def app():
                 img = np.array(our_image)
                 img = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 41,3)
                 col2.header('Edited Image')
-                col2.image(out_img, use_column_width=True)
+                col2.image(img, use_column_width=True)
 
             elif enhance_type == 'Bluring: Median':
                 img = np.array(our_image)
@@ -124,14 +124,14 @@ def app():
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
                 img_erosion = erode(img, br_rate)
                 col2.header('Edited Image')
-                col2.image(out_img, use_column_width=True)
+                col2.image(img, use_column_width=True)
             
             elif enhance_type == 'Dilation':
                 img = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
                 img_erosion = dilute(img, value)
                 col2.header('Edited Image')
-                col2.image(out_img, use_column_width=True)
+                col2.image(img, use_column_width=True)
 
             
             elif enhance_type == 'Bluring: Gaussian':
@@ -139,7 +139,7 @@ def app():
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
                 image = gaussianBlur(our_new_image, br_rate)
                 col2.header('Edited Image')
-                col2.image(out_img, use_column_width=True)
+                col2.image(image, use_column_width=True)
 
             
 
