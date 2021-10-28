@@ -31,7 +31,7 @@ def blurring(img, value):
     image_blur = cv2.filter2D(img, -1, blur_filter)
 
     return image_blur
-\
+
 
 
 
