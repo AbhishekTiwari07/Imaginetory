@@ -105,7 +105,7 @@ def app():
                 image = upscale(our_image)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
-
+            #ye wala dekh lena
             elif enhance_type == 'Denoising':
                 image = denoising(our_image)
                 col2.header('Edited Image')
