@@ -86,7 +86,6 @@ def app():
                 col2.image(out_img, use_column_width=True)
 
             elif enhance_type == 'Negative':
-
                 our_image = np.array(our_image)
                 out_img = negate(our_image)
                 col2.header('Edited Image')
@@ -94,11 +93,13 @@ def app():
 
 
             elif enhance_type == 'Upscale':
+                our_image = np.array(our_image)
                 image = upscale(our_image)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
             #ye wala dekh lena
             elif enhance_type == 'Denoising':
+                our_image = np.array(our_image)
                 image = denoising(our_image)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
