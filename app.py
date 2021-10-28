@@ -99,7 +99,7 @@ def app():
             
             if enhance_type == 'Bluring: Gaussian':
                 our_new_image = np.array(our_image)
-                br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
+                br_rate = st.sidebar.slider('Bluring', 1, 9, 2)
                 image = gaussianBlur(our_new_image, br_rate)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
