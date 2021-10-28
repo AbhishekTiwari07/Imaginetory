@@ -48,21 +48,24 @@ def negate(img):
 
     return result
 
-def thresholding(img):
-    image = cv2.medianBlur(img, 3)
-    return image
+def gaussianBlur(img, value):
+    img = cv2.medianBlur(img, value)
+    return img
+
+def medianBlur(img, value):
+    return cv2.GaussianBlur(img, (value,value), cv2.BORDER_DEFAULT)
 
 def app():
-    activities = ['Enhancements']
+    activities = ['Enhancements', 'Face Detection']
     choice = st.sidebar.selectbox('Select activities', activities)
 
     if choice == 'Enhancements':
-        st.title('Image Editor')
+        st.title('Dashboard')
         image_file = st.file_uploader(
             "Upload Image", type=['jpg', 'png', 'jpeg'])
 
         if image_file is None:
-            st.info('please upload image!!')
+            st.info('Uplaod image here')
         else:
             if image_file is not None:
                 col1, col2 = st.columns(2)
@@ -71,27 +74,33 @@ def app():
                 col1.image(our_image, use_column_width=True)
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
-                'Original', 'Thresholding:', 'Denoising','Bluring: Median',
+                'Original', 'Thresholding','Adaptive Thresholding', 'Denoising','Bluring: Median',
                 'Bluring: Gaussian', 'Negative' , 'Upscale'])
 
             if enhance_type == 'Thresholding':
                 img = np.array(our_image)
-                threshold = st.sidebar.slider('Threshold', 0,255,1)
-                out_img = cv2.threshold(img, threshold, 255, cv2.THRESH_BINARY)[1]
+                threshold = st.sidebar.slider('Threshold', 0, 255, 1)
+                out_img = gaussianBlur(img, value)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
-            if enhance_type == 'Bluring: Gaussian':
+            if enhance_type == 'Adaptive Thresholding':
+                img = np.array(our_image)
+                img = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 41,3)
+                col2.header('Edited Image')
+                col2.image(out_img, use_column_width=True)
+
+            if enhance_type == 'Bluring: Median':
                 img = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                out_img = cv2.GaussianBlur(img, (5,5), cv2.BORDER_DEFAULT)
+                out_img = medianBlur(img, br_rate)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
             
-            if enhance_type == 'Bluring: Median':
+            if enhance_type == 'Bluring: Gaussian':
                 our_new_image = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
-                out_img = cv2.medianBlur(our_new_image, br_rate)
+                image = gaussianBlur(our_new_image, br_rate)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
@@ -100,7 +109,6 @@ def app():
                 out_img = negate(our_image)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
-
 
             elif enhance_type == 'Upscale':
                 our_image = np.array(our_image)
@@ -113,7 +121,8 @@ def app():
                 image = denoising(our_image)
                 col2.header('Edited Image')
                 col2.image(image, use_column_width=True)
-
+    elif choice == 'Face Detection':
+        pass
 
 if __name__ == "__main__":
     app()
