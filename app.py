@@ -96,7 +96,7 @@ def app():
                 col1.image(our_image, use_column_width=True)
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
-                'Original', 'Gray scale', 'Contrast', 'Brightness',
+                'Original', 'Contrast', 
                 'Bluring', 'Negative', 'Contrast Stretching', 'Upscale'])
 
           
