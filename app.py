@@ -94,7 +94,7 @@ def negate(img):
 
 
 def app():
-    activities = ['Enhancements']
+    activities = ['Fuck u']
     choice = st.sidebar.selectbox('Select activities', activities)
 
     if choice == 'Enhancements':
