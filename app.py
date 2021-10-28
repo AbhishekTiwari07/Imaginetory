@@ -76,7 +76,7 @@ def app():
 
             
 
-            elif enhance_type == 'Bluring':
+            if enhance_type == 'Bluring':
 
                 our_new_image = np.array(our_image)
                 br_rate = st.sidebar.slider('Bluring', 1, 10, 1)
