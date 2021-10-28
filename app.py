@@ -71,8 +71,8 @@ def app():
                 col1.image(our_image, use_column_width=True)
 
             enhance_type = st.sidebar.radio('Enhancement Types', [
-                'Original', 'Denoising',
-                'Bluring', 'Negative' , 'Upscale'])
+                'Original', 'Denoising','Bluring: Median',
+                'Bluring: Gaussian', 'Negative' , 'Upscale'])
 
             if enhance_type == 'Bluring: Median':
                 img = np.array(our_image)
