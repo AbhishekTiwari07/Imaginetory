@@ -48,6 +48,9 @@ def negate(img):
 
     return result
 
+def thresholding(img, value):
+    return cv2.threshold(img, value, 255, cv2.THRESH_BINARY)[1]
+
 def gaussianBlur(img, value):
     img = cv2.medianBlur(img, value)
     return img
@@ -80,7 +83,7 @@ def app():
             if enhance_type == 'Thresholding':
                 img = np.array(our_image)
                 threshold = st.sidebar.slider('Threshold', 0, 255, 1)
-                out_img = gaussianBlur(img, threshold)
+                out_img = thresholding(img, threshold)
                 col2.header('Edited Image')
                 col2.image(out_img, use_column_width=True)
 
