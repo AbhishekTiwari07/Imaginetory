@@ -1,2 +1,2 @@
-# Upscale-Boomer
+# Imaginetory
 Image Project
