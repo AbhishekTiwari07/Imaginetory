@@ -126,7 +126,7 @@ def app():
                 # br_rate2 = st.sidebar.slider('Kernal Size', 1, 10, 1)
                 # img_erosion = erode(img, br_rate, br_rate2)
                 kernel = np.ones((3,3), np.uint8)
-                cv2.erode(img, kernel, iterations=1)
+                cv2.erode(img, kernel, iterations=2)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
             
@@ -136,7 +136,7 @@ def app():
                 # br_rate2 = st.sidebar.slider('Kernal Size', 1, 10, 1)
                 # img_erosion = dilute(img, br_rate, br_rate2)
                 kernel = np.ones((3,3), np.uint8)
-                cv2.dilate(img, kernel, iterations=1)
+                cv2.dilate(img, kernel, iterations=2)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
 
