@@ -120,16 +120,18 @@ def app():
 
             elif enhance_type == 'Erosion':
                 img = np.array(our_image)
+                br_rate = st.sidebar.slider('Kernel', 1, 10, 1)
                 br_rate2 = st.sidebar.slider('Iteration', 1, 10, 1)
-                kernel = np.ones((3,3), np.uint8)
+                kernel = np.ones((br_rate, br_rate), np.uint8)
                 img_erosion = erode(img, kernel, br_rate2)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
             
             elif enhance_type == 'Dilation':
                 img = np.array(our_image)
+                br_rate = st.sidebar.slider('Kernel', 1, 10, 1)
                 br_rate2 = st.sidebar.slider('Iteration', 1, 10, 1)
-                kernel = np.ones((3,3), np.uint8)
+                kernel = np.ones((br_rate,br_rate), np.uint8)
                 img_erosion = dilute(img, kernel, br_rate2)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
