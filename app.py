@@ -59,12 +59,10 @@ def medianBlur(img, value):
 def gaussianBlur(img, value):
     return cv2.GaussianBlur(img, (value,value), cv2.BORDER_DEFAULT)
 
-def erode(img, kernal, value):
-    kernel = np.ones((kernal, kernal), np.uint8)
+def erode(img, kernel, value):
     return cv2.erode(img, kernel, iterations=value)
 
-def dilute(img, kernal,value):
-    kernel = np.ones((kernal,kernal), np.uint8)
+def dilute(img, kernel,value):
     return cv2.dilate(img, kernel, iterations=value)
 
 def app():
@@ -132,7 +130,7 @@ def app():
                 img = np.array(our_image)
                 br_rate2 = st.sidebar.slider('Iteration', 1, 10, 1)
                 kernel = np.ones((3,3), np.uint8)
-                img_erosion = dilute(img, kernal, br_rate2)
+                img_erosion = dilute(img, kernel, br_rate2)
                 col2.header('Edited Image')
                 col2.image(img, use_column_width=True)
 
